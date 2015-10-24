@@ -4,9 +4,9 @@
       <div class="navbar navbar-default">
           <div class="navbar-form navbar-left" role="search">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" class="form-control" placeholder="Search" id="searchText">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" id="searchMoviesButton">Submit</button>
           </div>
           <div class="navbar-right">
           </div>
@@ -19,21 +19,23 @@
 <div class="row row1">
   <div class="col-lg-3 col-sm-offset-1">
     <div class="btn-group" role="group">
-      <button id="watched" class="btn btn-warning" role="group">Watched</button>
-      <button id="unwatched" class="btn btn-warning" role="group">Not Watch</button>
-      <button id="fiveStars" class="btn btn-warning" role="group">5 Stars</button>
+      <button id="filterWatched" class="btn btn-warning" role="group">Watched</button>
+      <button id="filterToWatch" class="btn btn-warning" role="group">Not Watch</button>
     </div>
+  </div>
+  <div class="col-lg-4">
+      <div class="noUi-target" id="sliderInput"></div>
   </div>
 </div>
 <!-- ==== /BUTTON GROUP FILTERS ==== -->
 
 <!-- ==== USER LIBRARY CONTENT ==== -->
 <div id="displayMovies" class="row row2">
-  {{#each movies}}
+  {{#each movie}}
   <div class="col-md-3">
     <div class="well well-sm singleMovie">
       <div class="row row2-1">
-        <h3 class="col-md-12">{{Title}}</h3>
+        <h3 class="col-md-12">{{Title}} ({{Year}})</h3>
       </div>
       <div class="row row2-2">
         <div class="imgWrap col-xs-4 col-xs-offset-4">
@@ -44,13 +46,20 @@
       </div>
       <div class="row row2-3">
         <div class="buttonWrap col-md-12">
-          <button class="btn btn-success">Add Movie</button>
-          <button class="watchedButton btn btn-danger">Watched</button>
+          {{#if savedToFirebase}}
+          {{else}}
+            <button class="addMovieButton btn btn-primary" imdbid={{imdbID}} savedToFirebase={{savedToFirebase}}>Add Movie</button>
+          {{/if}}
+          {{#if watched}}
+            <button class="watchedButton btn btn-success" id="watchedButton#{{imdbID}}" imdbid={{imdbID}} watched={{watched}}>Watched</button>
+          {{else}}
+            <button class="watchedButton btn btn-danger" id="watchedButton#{{imdbID}}" imdbid={{imdbID}} watched={{watched}}>Not Watched</button>
+          {{/if}}
         </div>
       </div>
       <div class="row row2-4">
         <div class="starWrap col-md-12">
-          <input type="number" class="starRating" data-stars=10 value={{rating}}>
+          <input type="number" class="starRating" imdbid={{imdbid}} data-stars=10 value={{rating}}>
         </div>
       </div>
     </div>

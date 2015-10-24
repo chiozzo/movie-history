@@ -1,29 +1,31 @@
 {
-
-    "name": "lib",
-    "version": "0.0.0",
-    "authors": [
-        "Martin Cross <mncross@gmail.com>"
-    ],
-    "moduleType": [
-        "amd",
-        "node"
-    ],
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components"
-    ],
-    "dependencies": {
-        "bootstrap": "~3.3.5",
-        "handlebars": "~3.0.3",
-        "jquery": "~2.1.4",
-        "lodash": "~3.10.1",
-        "require-handlebars-plugin": "~0.11.3",
-        "requirejs": "~2.1.20",
-        "q": "~1.0.1",
-        "firebase": "~2.3.0",
-        "bootstrap-material-design": "~0.3.0"
-    }
+  "name": "lib",
+  "version": "0.0.0",
+  "authors": [
+    "Martin Cross <mncross@gmail.com>"
+  ],
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "handlebars": "~3.0.3",
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.1",
+    "require-handlebars-plugin": "~0.11.3",
+    "requirejs": "~2.1.20",
+    "q": "~1.0.1",
+    "firebase": "~2.3.0",
+    "bootstrap-material-design": "~0.3.0",
+    "bootstrap-star-rating": "~3.5.4",
+    "scotch-panels": "~1.0.3",
+    "nouislider": "~8.0.2"
+  }
 }

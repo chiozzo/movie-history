@@ -93,7 +93,7 @@ define(["jquery", "q", "firebase"],
 		markWatched: function(imdbID, thisButton) {
 			$(thisButton).attr("watched", true);
 			firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: true});
-			$(thisButton).removeClass("btn-default");
+			$(thisButton).removeClass("btn-danger");
 			$(thisButton).addClass("btn-success");
 			$(thisButton).text("Watched");
 		},
@@ -101,46 +101,12 @@ define(["jquery", "q", "firebase"],
 			$(thisButton).attr("watched", false);
 			firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: false});
 			$(thisButton).removeClass("btn-success");
-			$(thisButton).addClass("btn-default");
+			$(thisButton).addClass("btn-danger");
 			$(thisButton).text("Not Watched");
 		},
 		changeRating: function(imdbID, thisButton, ratingValue) {
 			firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({rating: ratingValue});
 
-		},
-
-		setFilterWatched: function(allMovies) {
-			var filteredWatchedMovies = allMovies.filter(function(movie){
-				console.log(movie.watched);
-				if ( movie.watched === true) {
-					return movie;
-				// console.log("success of filter");
-				}
-			});
-			console.log("filteredWatchedMovies", filteredWatchedMovies);
-			return filteredWatchedMovies;
-		},
-
-		setFilterNotWatched:  function(allMovies) {
-			var filteredNotWatchedMovies = allMovies.filter(function(movie){
-				console.log(movie.notWatched);
-				if ( movie.watched === false ) {
-					return movie;
-				}
-			});
-			console.log("filteredNotWatchedMovies", filteredNotWatchedMovies);
-			return filteredNotWatchedMovies;
-		},
-
-		setFilter5stars:  function(allMovies) {
-			var filtered5stars = allMovies.filter(function(movie){
-				console.log(movie.rating);
-				if (movie.rating == "5") {
-					return movie;
-				}
-			});
-			console.log("filtered5stars", filtered5stars);
-			return filtered5stars;
 		}
 	};
 });

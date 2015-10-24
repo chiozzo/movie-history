@@ -1,52 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>Movie History</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link href="lib/bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="styles/main.css">
+  <title>Movie Viewer</title>
+  <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link href="./lib/bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css">
+  <link href="./lib/bower_components/nouislider/distribute/nouislider.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
-
-<!-- ===========Add Movie Modal below============ -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="addMovieModal" role="dialog">
-  <div class="modal-dialog modal-lg">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body" id="OMDbSearchResults">
-      <!-- Insert addMovie.hbs here -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<div class="container-fluid">
+<div id="loginRegister">
+  <div class="jumbotron" id="panelContainer">
+    <div class="registerForm" id="registerForm">
+      <h2>Please register to start adding movies</h2>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="registerEmailInput" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="registerEmailInput" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="registerPasswordInput" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="registerPasswordInput" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="registerUserButton">Register</button>
+          </div>
+        </div>
       </div>
     </div>
-
+    <div class="loginForm" id="loginForm">
+      <h2>Please sign in to view your movies</h2>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="loginEmailInput" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="loginEmailInput" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="loginPasswordInput" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="loginPasswordInput" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="loginUserButton">Sign In</button>
+          </div>
+        </div>
+      </div>
+      <p>You've never been here before? <button class="btn btn-primary btn-xs" role="button" id="registerFormButton">Register here</button></p>
+    </div>
   </div>
 </div>
-<!-- ===========Add Movie Modal above============ -->
-
-
-
-<section class="well well-lg col-md-2 col-md-offset-5" id="loginRegister">
-  <h4 class="center-block" id="loginMessage">Please Login or Register to Start!</h4>
-  <div class="form-group">
-    <input type="email/username" id="email" class="form-control" placeholder="Enter Email Address">
-    <input type="password" id="pwd" class="form-control" placeholder="Enter Password">
-    <div class="center-block">
-      <button id="loginButton" class="btn btn-default">Login</button>
-      <button id="registerButton" class="btn btn-default">Register</button>
-    </div>
-  </div>
-</section>
-
-<section class="row" id="myMovies"></section>
-
-<script data-main="javascripts/main" src="../lib/bower_components/requirejs/require.js"></script>
+<div id="myMovies"></div>
+</div>
+<script data-main="javascripts/main" src="lib/bower_components/requirejs/require.js"></script>
 </body>
 </html>

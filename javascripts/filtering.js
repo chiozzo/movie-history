@@ -21,9 +21,29 @@ define(["jquery", "lodash", "dataControl", "firebase", "domControl"],
 				domControl.loadProfileHbs(filteredMovies);
 			});
 		},
-
-		
-
-
+		setFilterWatched: function(allMovies) {
+			var filteredWatchedMovies = allMovies.filter(function(movie){
+				if ( movie.watched === true) {
+					return movie;
+				}
+			});
+			return filteredWatchedMovies;
+		},
+		setFilterNotWatched:  function(allMovies) {
+			var filteredNotWatchedMovies = allMovies.filter(function(movie){
+				if ( movie.watched === false ) {
+					return movie;
+				}
+			});
+			return filteredNotWatchedMovies;
+		},
+		setFilter5stars:  function(allMovies) {
+			var filtered5stars = allMovies.filter(function(movie){
+				if (movie.rating == "5") {
+					return movie;
+				}
+			});
+			return filtered5stars;
+		}
 	};
 });

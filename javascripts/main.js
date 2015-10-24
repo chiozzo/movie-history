@@ -1,37 +1,57 @@
 requirejs.config({
-  baseUrl: './javascripts',
-  paths: {
-    'jquery': '../lib/bower_components/jquery/dist/jquery.min',
-    'lodash': '../lib/bower_components/lodash/lodash.min',
-    'hbs': '../lib/bower_components/require-handlebars-plugin/hbs',
-    'bootstrap': '../lib/bower_components/bootstrap/dist/js/bootstrap.min',
-    'bootstrap-star-rating': '../lib/bower_components/bootstrap-star-rating/js/star-rating.min',
-    'q': '../lib/bower_components/q/q',
-    'firebase' : '../lib/bower_components/firebase/firebase'
+  baseUrl: "./javascripts",
+  paths:{
+    "jquery": "../lib/bower_components/jquery/dist/jquery.min",
+    "q": "../lib/bower_components/q/q",
+    "lodash" : "../lib/bower_components/lodash/lodash.min",
+    "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
+    "hbs": "../lib/bower_components/require-handlebars-plugin/hbs",
+    "firebase" : "../lib/bower_components/firebase/firebase",
+    "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min",
+    "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
+    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider"
   },
   shim: {
-    'bootstrap': ['jquery'],
-    'bootstrap-star-rating': ['bootstrap'],
-    'firebase': {exports: 'Firebase'}
+    "bootstrap": ["jquery"],
+    "scotch-panels": ["jquery"],
+    "bootstrap-star-rating": ["bootstrap"],
+    "nouislider": ["jquery"],
+    "firebase": {exports: "Firebase"}
   }
 });
 
-requirejs(
-  ["jquery", "lodash", "hbs", "bootstrap", "bootstrap-star-rating", "q", "firebase", "dataControl", "loginRegister", "domControl", "filtering"],
-  function($, _, Handlebars, bootstrap, bootstrapStarRating, q, Firebase, dataControl, loginRegister, domControl, filtering) {
+require(
+  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "dataControl", "authenticate", "domControl", "filtering"],
+  function($, q, _, scotchPanels, bootstrapStarRating, dataControl, authenticate, domControl, filtering) {
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
-  loginRegister.getLogin();
-
-  $("#loginButton").click(function(){
+  var panelExample = $('#registerForm').scotchPanel({
+    containerSelector: '#panelContainer', // Make this appear on the entire screen
+    direction: 'left', // Make it toggle in from the left
+    duration: 300, // Speed in ms how fast you want it to be
+    transition: 'ease', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
+    distanceX: '100%', // Size of the toggle
+    enableEscapeKey: true // Clicking Esc will close the panel
   });
 
-  $('#registerButton').click(function(){
-    loginRegister.getRegister();
+  $(document).on('click', '#registerFormButton', function() {
+    panelExample.open();
   });
 
-  $(document).on('click', '#searchMyMoviesButton', function() {
+  $("#loginUserButton").click(function(){
+    authenticate.loginUser($('#loginEmailInput').val(), $('#loginPasswordInput').val());
+  });
+
+  $('#registerUserButton').click(function(){
+    authenticate.registerNewUser().then(function(authArray){
+      var email = authArray[0];
+      var password = authArray[1];
+      authenticate.loginUser(email, password);
+    });
+  });
+
+  $(document).on('click', '#searchMoviesButton', function() {
     var searchResultsArray;
     var combinedMoviesArray;
     dataControl.OMDbSearch($('#searchText').val())
@@ -72,24 +92,14 @@ requirejs(
   //   });
   // });
 
-  $(document).on('click', '.addRemoveMovieButton', function() {
+  $(document).on('click', '.addMovieButton', function() {
     var thisMovie = $(this).attr("imdbid");
-    if ($(this).attr("savedToFirebase") == "true") {
-      dataControl.deleteUsersMovies(thisMovie);
-      $(this).parents(".panel").hide('slow', function() {
-        $(this).remove();
-      });
-    } else {
       dataControl.OMDbIDSearch(thisMovie)
       .then(function(OMDbExactMatch) {
         var currentUser = firebaseRef.getAuth().uid;
         dataControl.addUserMovie(OMDbExactMatch);
       });
-      $(this).attr("savedToFirebase", true);
-      $(this).removeClass("btn-default");
-      $(this).addClass("btn-danger");
-      $(this).text("Remove Movie");
-    }
+    $(this).remove();
   });
 
   $(document).on("click", ".deleteButton", function() {
@@ -121,10 +131,8 @@ requirejs(
   $(document).on("click", "#filterWatched", function(){
     dataControl.getUsersMovies()
      .then(function(allMovies) {
-        var filterWatchedMovies = dataControl.setFilterWatched(allMovies);
-        domControl.loadProfileHbs(filterWatchedMovies);
+        domControl.loadProfileHbs(filtering.setFilterWatched(allMovies));
     });
-    console.log("watched filter has been clicked");
   });
 
 // filter for movies NOT watched
@@ -132,37 +140,23 @@ requirejs(
   $(document).on("click", "#filterToWatch", function(){
     dataControl.getUsersMovies()
       .then(function(allMovies) {
-        domControl.loadProfileHbs(dataControl.setFilterNotWatched(allMovies));
+        domControl.loadProfileHbs(filtering.setFilterNotWatched(allMovies));
       });
   });
 
-// filter for 5 star movies
-
-    $(document).on("click", "#filterRated5", function(){
-      dataControl.getUsersMovies()
-        .then(function(allMovies){
-          domControl.loadProfileHbs(dataControl.setFilter5stars(allMovies));
-        });
-    });
-
-    // filter back to all
-
-    $(document).on("click", "#filterAll", function (){
-      dataControl.getUsersMovies()
+  // filter for 5 star movies
+  $(document).on("click", "#filterRated5", function(){
+    dataControl.getUsersMovies()
       .then(function(allMovies){
-        domControl.loadProfileHbs(allMovies);
+        domControl.loadProfileHbs(filtering.setFilter5stars(allMovies));
       });
+  });
+
+  // filter back to all
+  $(document).on("click", "#filterAll", function (){
+    dataControl.getUsersMovies()
+    .then(function(allMovies){
+      domControl.loadProfileHbs(allMovies);
     });
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
