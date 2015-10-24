@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Movie Viewer</title>
+	<link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="jumbotron" id="panelContainer">
+		<div class="registerForm" id="registerForm">
+			<h2>Please register to start adding movies</h2>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label for="registerEmailInput" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="registerEmailInput" placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="registerPasswordInput" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="registerPasswordInput" placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary btn-lg btn-block" id="registerUserButton">Register</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="loginForm" id="loginForm">
+			<h2>Please sign in to view your movies</h2>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label for="loginEmailInput" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="loginEmailInput" placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="loginPasswordInput" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="loginPasswordInput" placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+					</div>
+				</div>
+			</div>
+			<p>You've never been here before? <button class="btn btn-primary btn-xs" role="button" id="registerFormButton">Register here</button></p>
+		</div>
+	</div>
+</div>
+<script data-main="javascripts/mainTest" src="lib/bower_components/requirejs/require.js"></script>
+</body>
+</html>

@@ -1,190 +1,65 @@
-$himage: "http://editor.circlepad.com/cpGraphics/templatePhotos/1024_691_DinoLightBackground.jpg";
-$bimage: "http://www.jennettefulda.com/wp-content/uploads/2014/08/movie-theater-500.jpg";
-$simage: "http://www.foodincmovie.co.uk/img/site/background_home-03.jpg";
-$limage: "http://freedesignfile.com/upload/2014/07/Movie-time-design-elements-vector-backgrounds-03.jpg";
-.row {
-
+* {
+  // border: solid red 1px;
 }
-.well{
-  margin-left: 400px;
-  background-image: url($limage);
-  align:center;
-  background-color: #999966;
-  width: 400px;
-  text-align: center;
-  margin-top: 0px;
 
-}
 body {
-  background-image: url($simage);
-  color: #020202;
-  align: center;
-  background-repeat: no-repeat;
-  
-}
-header {
-  background-color: #CCCCCC;
-  height: 100px;
+  background: url("../images/clapperBoard.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
-@media screen and (min-width: 640px) {
-  .panel {
-    display: inline-block;
-    padding: 50px;
-    background-color:white;
-  }
+.row1 {
+  margin-bottom: 1em;
 }
 
-button {
-  color: black;
+.row2-2 {
+  margin-bottom: 1em;
 }
 
-
-marquee{
-  color: blue;
-}
-
-.center-block {
-  max-height: 300px;
-  max-width: 200px;
-  padding: auto;
-}
-.panel-footer {
-  height: 100px;
-  width: 75px;
-  background-color: #CCCCCC;
-  align-content: center;
-}
-.panel {
-  border: solid black;
-  height: 700px;
-  background-color: #CCCCCC;
-}
-
-.modal-content {
-  border: 1px solid #0066FF;
-}
-
-.modal-header{
-  border:1px solid black;
-}
-.modal-body {
-  border:1px solid black;
-  padding: 5px;
-}
-
-div.panel-heading p {
-  color: black;
-  
- 
-
-} 
-
-
-div.panel-heading {
-  background-image: yellow;
-  color: black;
-  background:yellow;
-}
- .panel-heading  {
-  border: solid #000;
-  max-height: 100px;
-  min-height: 100px;
-  background: yellow;
-  align-content: center;
-  background-color: black;
-  color: yellow;
-  background-image: green;
-
- }
-
-
-div img {
-  margin: 10px;
-    padding: 5px;
-    border:3px solid black;
-    height: auto;
-    width: auto;
-    text-align: center;
-}
-
-
-
-
-form .stars {
-  background: url("stars.png") repeat-x 0 0;
-  width: 150px;
-  margin: 0 auto;
-}
- 
-form .stars input[type="radio"] {
+.jumbotron {
   position: absolute;
-  opacity: 0;
-  filter: alpha(opacity=0);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(211,211,211,0.9);
+  border: solid black 1px;
 }
-form .stars input[type="radio"].star-6:checked ~ span {
-  width: 120%;
+
+.singleMovie {
+  text-align: center;
+  background-color: rgba(211,211,211,0.8);
+  border: solid black 1px;
+  border-radius: 1em;
+  height: 31em;
 }
-form .stars input[type="radio"].star-5:checked ~ span {
-  width: 100%;
+
+.imgWrap {
+  padding: 0;
+  margin-right: 0;
 }
-form .stars input[type="radio"].star-4:checked ~ span {
-  width: 80%;
+
+.imgWrap img {
+  padding: 0;
+  margin-right: 0;
 }
-form .stars input[type="radio"].star-3:checked ~ span {
-  width: 60%;
+
+.imgWrap .close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.5;
+    text-align: center;
+    line-height: 10px;
+    background-color: rgba(255,0,0,0.6);
+    padding: 0.2em 0.2em 0.5em 0.5em;
+    border-bottom-left-radius: 1em;
 }
-form .stars input[type="radio"].star-2:checked ~ span {
-  width: 40%;
-}
-form .stars input[type="radio"].star-1:checked ~ span {
-  width: 20%;
-}
-form .stars label {
-  display: block;
-  width: 30px;
-  height: 30px;
-  margin: 0!important;
-  padding: 0!important;
-  text-indent: -999em;
-  float: left;
-  position: relative;
-  z-index: 10;
-  background: transparent!important;
-  cursor: pointer;
-}
-form .stars label:hover ~ span {
-  background-position: 0 -30px;
-}
-form .stars label.star-6:hover ~ span {
-  width: 120% !important;
-}
-form .stars label.star-5:hover ~ span {
-  width: 100% !important;
-}
-form .stars label.star-4:hover ~ span {
-  width: 80% !important;
-}
-form .stars label.star-3:hover ~ span {
-  width: 60% !important;
-}
-form .stars label.star-2:hover ~ span {
-  width: 40% !important;
-}
-form .stars label.star-1:hover ~ span {
-  width: 20% !important;
-}
-form .stars span {
-  display: block;
-  width: 0;
-  position: relative;
-  top: 0;
-  left: 0;
-  height: 30px;
-  background: url("stars.png") repeat-x 0 -60px;
-  -webkit-transition: -webkit-width 0.5s;
-  -moz-transition: -moz-width 0.5s;
-  -ms-transition: -ms-width 0.5s;
-  -o-transition: -o-width 0.5s;
-  transition: width 0.5s;
+
+.imgWrap:hover .close {
+    opacity: 1;
 }

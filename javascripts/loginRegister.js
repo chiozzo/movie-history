@@ -11,9 +11,11 @@ define(["firebase", "dataControl", "domControl"], function(firebase, dataControl
 				if (error) {
 					console.log("Login Failed!", error);
 				} else {
+					console.log("login run");
 					dataControl.getUsersMovies()
 					.then(function(moviesReturnedByPromise){
-							$('#loginRegister').remove();
+							// $('#loginRegister').remove();
+							console.log("moviesReturnedByPromise", moviesReturnedByPromise);
 							domControl.loadProfileHbs(moviesReturnedByPromise);
 					});
 				}

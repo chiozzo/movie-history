@@ -22,8 +22,9 @@ requirejs(
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
+  loginRegister.getLogin();
+
   $("#loginButton").click(function(){
-    loginRegister.getLogin();
   });
 
   $('#registerButton').click(function(){

@@ -112,7 +112,7 @@ define(["jquery", "q", "firebase"],
 		setFilterWatched: function(allMovies) {
 			var filteredWatchedMovies = allMovies.filter(function(movie){
 				console.log(movie.watched);
-				if ( movie.watched == true) {
+				if ( movie.watched === true) {
 					return movie;
 				// console.log("success of filter");
 				}
@@ -124,7 +124,7 @@ define(["jquery", "q", "firebase"],
 		setFilterNotWatched:  function(allMovies) {
 			var filteredNotWatchedMovies = allMovies.filter(function(movie){
 				console.log(movie.notWatched);
-				if ( movie.watched == false ) {
+				if ( movie.watched === false ) {
 					return movie;
 				}
 			});
