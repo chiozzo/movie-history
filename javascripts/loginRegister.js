@@ -5,8 +5,8 @@ define(["firebase", "dataControl", "domControl"], function(firebase, dataControl
 	return {
 		getLogin: function(emailArg, passwordArg) {
 			firebaseRef.authWithPassword({
-					email 	 : $('#email').val(),
-					password : $('#pwd').val()
+					email 	 : "mncross@gmail.com",
+					password : "abc"
 			}, function(error, authData) {
 				if (error) {
 					console.log("Login Failed!", error);

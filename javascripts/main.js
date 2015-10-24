@@ -31,12 +31,32 @@ requirejs(
   });
 
   $(document).on('click', '#searchMyMoviesButton', function() {
+    var searchResultsArray;
+    var combinedMoviesArray;
     dataControl.OMDbSearch($('#searchText').val())
     .then(function(OMDbSearchResults) {
-      console.log("OMDbSearchResults", OMDbSearchResults);
+      searchResultsArray = OMDbSearchResults;
       dataControl.getUsersMovies()
       .then(function(firebaseMovies) {
-        console.log("firebaseMovies", firebaseMovies);
+        var firebaseMoviesArray = _.values(firebaseMovies).sort(function(a, b) {
+          if (a.Title[0] < b.Title[0]) {
+            return -1;
+          }
+          if (a.Title[0] > b.Title[0]) {
+            return 1;
+          }
+          return 0;
+        });
+        var firebaseMoviesIMDbID = _.chain(firebaseMoviesArray).pluck('imdbID').uniq().value();
+        var filteredSearchResultsArray = searchResultsArray.filter(function(value, index, array) {
+          if ($.inArray(value.imdbID, firebaseMoviesIMDbID) === -1) {
+            return true;
+          } else{
+            return false;
+          }
+        });
+        combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
+        domControl.loadProfileHbs(combinedMoviesArray);
       });
     });
   });
@@ -71,39 +91,6 @@ requirejs(
     }
   });
 
-
-  $(document).on('click', '#searchMyMoviesButton', function() {
-    var searchResultsArray;
-    var combinedMoviesArray;
-    dataControl.OMDbSearch($('#searchText').val())
-    .then(function(OMDbSearchResults) {
-      searchResultsArray = OMDbSearchResults;
-      dataControl.getUsersMovies()
-      .then(function(firebaseMovies) {
-        var firebaseMoviesArray = _.values(firebaseMovies).sort(function(a, b) {
-          if (a.Title[0] < b.Title[0]) {
-            return -1;
-          }
-          if (a.Title[0] > b.Title[0]) {
-            return 1;
-          }
-          return 0;
-        });
-        var firebaseMoviesIMDbID = _.chain(firebaseMoviesArray).pluck('imdbID').uniq().value();
-        var filteredSearchResultsArray = searchResultsArray.filter(function(value, index, array) {
-          if ($.inArray(value.imdbID, firebaseMoviesIMDbID) === -1) {
-            return true;
-          } else{
-            return false;
-          }
-        });
-        combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
-        domControl.loadProfileHbs(combinedMoviesArray);
-      });
-    });
-  });
-
-
   $(document).on("click", ".deleteButton", function() {
     var imdbid = $(this).attr("imdbid");
     // dataControl.deleteUsersMovies(imdbid);
@@ -112,7 +99,6 @@ requirejs(
       domControl.loadProfileHbs(movies);
     });
   });
-
 
   $(document).on('click', '.watchedButton', function() {
     var thisMovie = $(this).attr("imdbid");
@@ -140,7 +126,6 @@ requirejs(
     console.log("watched filter has been clicked");
   });
 
-
 // filter for movies NOT watched
 
   $(document).on("click", "#filterToWatch", function(){
@@ -150,7 +135,6 @@ requirejs(
       });
   });
 
-
 // filter for 5 star movies
 
     $(document).on("click", "#filterRated5", function(){
@@ -159,7 +143,6 @@ requirejs(
           domControl.loadProfileHbs(dataControl.setFilter5stars(allMovies));
         });
     });
-
 
     // filter back to all
 
