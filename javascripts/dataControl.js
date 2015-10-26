@@ -10,13 +10,14 @@ define(["jquery", "q", "firebase"],
 			$.ajax("http://www.omdbapi.com/?s=" + searchString + "&type=movie&r=json")
 			.done(function(potentialMatches) {
 				var searchResultsArray = potentialMatches.Search;
-				var mappedSearchResultsArray = searchResultsArray.map(function(currValue, index, array) {
-					if(currValue.Poster === "N/A") {
-						currValue.Poster = "../images/defaultPoster.jpg";
+				var mappedSearchResultsArray = searchResultsArray.map(function(currentValue) {
+					if(currentValue.Poster === "N/A") {
+						currentValue.Poster = "../images/defaultPoster.jpg";
 					} else {
-						currValue.Poster = "http://img.omdbapi.com/?i=" + currValue.imdbID + "&apikey=8513e0a1";
+						currentValue.Poster = "http://img.omdbapi.com/?i=" + currentValue.imdbID + "&apikey=8513e0a1";
 					}
-					return currValue;
+					currentValue.active = true;
+					return currentValue;
 				});
 				deferred.resolve(mappedSearchResultsArray);
 			}).fail(function() {
@@ -46,7 +47,8 @@ define(["jquery", "q", "firebase"],
 					Poster: "../images/defaultPoster.jpg",
 					rating: 0,
 					imdbID: movieObject.imdbID,
-					savedToFirebase: true
+					savedToFirebase: true,
+					active: true
 				};
 			} else {
 				newMovie = {
@@ -57,7 +59,8 @@ define(["jquery", "q", "firebase"],
 					Poster: "http://img.omdbapi.com/?i=" + movieObject.imdbID + "&apikey=8513e0a1",
 					rating: 0,
 					imdbID: movieObject.imdbID,
-					savedToFirebase: true
+					savedToFirebase: true,
+					active: true
 				};
 			}
 			firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(movieObject.imdbID).set(newMovie);
@@ -83,12 +86,13 @@ define(["jquery", "q", "firebase"],
 			});
 			return deferred.promise;
 		},
-		deleteUsersMovies: function(imdbid) {
-			firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbid).remove(function(error) {
-				if (error) {
-					console.log("there was an error", error);
-				}
-			});
+		deleteUsersMovies: function(imdbID) {
+			// firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbid).remove(function(error) {
+			// 	if (error) {
+			// 		console.log("there was an error", error);
+			// 	}
+			// });
+			firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({active: false});
 		},
 		markWatched: function(imdbID, thisButton) {
 			$(thisButton).attr("watched", true);

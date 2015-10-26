@@ -11,19 +11,11 @@ define(["firebase", "dataControl", "domControl", "nouislider", "q"], function(fi
 				if (error) {
 					console.log("Login Failed!", error);
 				} else {
+					$('#loginRegister').remove();
+					$('#myNav').show();
 					dataControl.getUsersMovies()
 					.then(function(moviesReturnedByPromise){
-							$('#loginRegister').remove();
 							domControl.loadProfileHbs(moviesReturnedByPromise);
-							noUiSlider.create(document.getElementById('sliderInput'), {
-								start: 0,
-								connect: 'lower',
-								step: 1,
-								range: {
-									'min': 0,
-									'max': 10
-								}
-							});
 					});
 				}
 			});

@@ -21,8 +21,8 @@ requirejs.config({
 });
 
 require(
-  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "dataControl", "authenticate", "domControl", "filtering"],
-  function($, q, _, scotchPanels, bootstrapStarRating, dataControl, authenticate, domControl, filtering) {
+  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "authenticate", "domControl", "filtering"],
+  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, domControl, filtering) {
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
@@ -35,7 +35,10 @@ require(
     enableEscapeKey: true // Clicking Esc will close the panel
   });
 
+  // authenticate.loginUser("mncross@gmail.com", "abc");
+
   $(document).on('click', '#registerFormButton', function() {
+    $('#registerForm').show();
     panelExample.open();
   });
 
@@ -57,6 +60,7 @@ require(
     dataControl.OMDbSearch($('#searchText').val())
     .then(function(OMDbSearchResults) {
       searchResultsArray = OMDbSearchResults;
+      console.log("searchResultsArray", searchResultsArray);
       dataControl.getUsersMovies()
       .then(function(firebaseMovies) {
         var firebaseMoviesArray = _.values(firebaseMovies).sort(function(a, b) {
@@ -82,16 +86,6 @@ require(
     });
   });
 
-  // $(document).on('click', '#searchOMDbButton', function(){
-  //   dataControl.OMDbSearch($('#searchText').val())
-  //   .then(function(OMDbSearchResults) {
-  //     require(['hbs!../templates/addMovie'], function(addMovie) {
-  //       $('#OMDbSearchResults').html(addMovie({movies: OMDbSearchResults}));
-  //     });
-  //     $('#addMovieModal').modal();
-  //   });
-  // });
-
   $(document).on('click', '.addMovieButton', function() {
     var thisMovie = $(this).attr("imdbid");
       dataControl.OMDbIDSearch(thisMovie)
@@ -104,10 +98,9 @@ require(
 
   $(document).on("click", ".deleteButton", function() {
     var imdbid = $(this).attr("imdbid");
-    // dataControl.deleteUsersMovies(imdbid);
-    dataControl.getUsersMovies()
-    .then(function(movies) {
-      domControl.loadProfileHbs(movies);
+    dataControl.deleteUsersMovies(imdbid);
+    $(this).parents(".thisMovie").hide('slow', function() {
+      $(this).remove();
     });
   });
 
@@ -144,19 +137,22 @@ require(
       });
   });
 
-  // filter for 5 star movies
-  $(document).on("click", "#filterRated5", function(){
-    dataControl.getUsersMovies()
-      .then(function(allMovies){
-        domControl.loadProfileHbs(filtering.setFilter5stars(allMovies));
-      });
+  var slider = document.getElementById('sliderInput');
+  noUiSlider.create(slider, {
+    start: 0,
+    connect: 'lower',
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 10
+    }
   });
-
-  // filter back to all
-  $(document).on("click", "#filterAll", function (){
-    dataControl.getUsersMovies()
-    .then(function(allMovies){
-      domControl.loadProfileHbs(allMovies);
-    });
+  slider.noUiSlider.on('slide', function(values){
+      dataControl.getUsersMovies()
+      .then(function(allMovies){
+        var starValue = Math.round(values[0]);
+        var filteredMovies = filtering.filterByStars(allMovies, starValue);
+        domControl.loadProfileHbs(filteredMovies);
+      });
   });
 });

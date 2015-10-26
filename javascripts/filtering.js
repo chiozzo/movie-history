@@ -37,13 +37,15 @@ define(["jquery", "lodash", "dataControl", "firebase", "domControl"],
 			});
 			return filteredNotWatchedMovies;
 		},
-		setFilter5stars:  function(allMovies) {
-			var filtered5stars = allMovies.filter(function(movie){
-				if (movie.rating == "5") {
+		filterByStars:  function(allMovies, starValue) {
+			var filteredByStars = allMovies.filter(function(movie){
+				if (starValue == 0) {
+					return movie;
+				} else if (movie.rating == starValue && movie.watched === true) {
 					return movie;
 				}
 			});
-			return filtered5stars;
+			return filteredByStars;
 		}
 	};
 });
