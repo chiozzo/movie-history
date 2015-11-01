@@ -4,25 +4,21 @@ requirejs.config({
     "jquery": "../lib/bower_components/jquery/dist/jquery.min",
     "q": "../lib/bower_components/q/q",
     "lodash" : "../lib/bower_components/lodash/lodash.min",
-    "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
     "hbs": "../lib/bower_components/require-handlebars-plugin/hbs",
     "firebase" : "../lib/bower_components/firebase/firebase",
     "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min",
-    "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
     "nouislider": "../lib/bower_components/nouislider/distribute/nouislider"
   },
   shim: {
-    "bootstrap": ["jquery"],
     "scotch-panels": ["jquery"],
-    "bootstrap-star-rating": ["bootstrap"],
     "nouislider": ["jquery"],
     "firebase": {exports: "Firebase"}
   }
 });
 
 require(
-  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "authenticate", "domControl", "filter"],
-  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, domControl, filter) {
+  ["jquery", "q", "lodash", "scotch-panels", "nouislider", "dataControl", "authenticate", "domControl", "filter"],
+  function($, q, _, scotchPanels, noUiSlider, dataControl, authenticate, domControl, filter) {
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
