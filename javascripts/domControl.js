@@ -1,4 +1,4 @@
-define(["jquery", "hbs", "nouislider", "dataControl", "filtering"], function($, hbs, noUiSlider, dataControl, filtering) {
+define(["jquery", "hbs", "nouislider", "dataControl", "filter"], function($, hbs, noUiSlider, dataControl, filter) {
 
 	return {
 		loadProfileHbs: function(allMoviesArray) {
